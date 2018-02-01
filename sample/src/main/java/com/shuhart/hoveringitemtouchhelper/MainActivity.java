@@ -30,35 +30,48 @@ public class MainActivity extends AppCompatActivity {
             }
         }});
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        HoveringCallback callback = new HoveringCallback();
-        callback.setBackgroundCallback(new HoveringCallback.ItemBackgroundCallbackAdapter() {
-            private Drawable defaultBackground = new ColorDrawable(Color.WHITE);
-            private Drawable emptySlotBackground = new ColorDrawable(Color.parseColor("#f8f8f8"));
-            private Drawable hoverBackground = new ColorDrawable(Color.parseColor("#e9effb"));
+        HoverItemDecoration itemDecoration = new HoverItemDecoration(new HoveringCallback(),
+                new ItemBackgroundCallbackAdapter() {
+                    private Drawable defaultBackground = new ColorDrawable(Color.WHITE);
+                    private Drawable emptySlotBackground = new ColorDrawable(Color.parseColor("#f8f8f8"));
+                    private Drawable hoverBackground = new ColorDrawable(Color.parseColor("#e9effb"));
 
-            @Override
-            public Drawable getDefaultBackground(RecyclerView.ViewHolder viewHolder) {
-                return defaultBackground;
-            }
+                    @Override
+                    public Drawable getDefaultBackground(RecyclerView.ViewHolder viewHolder) {
+                        return defaultBackground;
+                    }
 
-            @Override
-            public Drawable getDraggingBackground(RecyclerView.ViewHolder viewHolder) {
-                return defaultBackground;
-            }
+                    @Override
+                    public Drawable getDraggingBackground(RecyclerView.ViewHolder viewHolder) {
+                        return defaultBackground;
+                    }
 
-            @Override
-            public Drawable getEmptySlotBackground() {
-                return emptySlotBackground;
-            }
+                    @Override
+                    public Drawable getEmptySlotBackground() {
+                        return emptySlotBackground;
+                    }
 
-            @Nullable
-            @Override
-            public Drawable getHoverBackground(RecyclerView.ViewHolder viewHolder) {
-                return hoverBackground;
-            }
-        });
-        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-        touchHelper.attachToRecyclerView(recyclerView);
+                    @Nullable
+                    @Override
+                    public Drawable getHoverBackground(RecyclerView.ViewHolder viewHolder) {
+                        return hoverBackground;
+                    }
+                });
+        itemDecoration.attachToRecyclerView(recyclerView);
+//        ItemTouchHelper touchHelper = new ItemTouchHelper(
+//                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+//                    @Override
+//                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+//                                          RecyclerView.ViewHolder target) {
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+//
+//                    }
+//                });
+//        touchHelper.attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(adapter);
     }
 
