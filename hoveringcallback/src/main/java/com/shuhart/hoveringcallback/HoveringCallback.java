@@ -8,7 +8,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
-    private static final float threshold = 10;
+    private static final float THRESHOLD = 10;
+    private float threshold = THRESHOLD;
     private final Rect draggedViewBounds = new Rect();
     private Helper helper = new Helper();
     private float deltaY;
@@ -55,6 +56,10 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
 
         helper.prepare(parent);
 
+        parent.getDecoratedBoundsWithMargins(viewHolder.itemView, draggedViewBounds);
+        draggedViewBounds.top += dY;
+        draggedViewBounds.bottom += dY;
+
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
@@ -67,11 +72,7 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
 
             RecyclerView.ViewHolder childViewHolder = parent.findContainingViewHolder(child);
 
-            parent.getDecoratedBoundsWithMargins(viewHolder.itemView, draggedViewBounds);
-            draggedViewBounds.top += dY;
-            draggedViewBounds.bottom += dY;
-
-            if (helper.hover(draggedViewBounds, helper.bounds, deltaY) && canDropOver(parent, viewHolder, childViewHolder)) {
+            if (hover(draggedViewBounds, helper.bounds, deltaY) && canDropOver(parent, viewHolder, childViewHolder)) {
                 child.setBackgroundDrawable(backgroundCallback.getHoverBackground(childViewHolder));
             } else {
                 child.setBackgroundDrawable(backgroundCallback.getDefaultBackground(childViewHolder));
@@ -88,5 +89,13 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
                 deltaY = 1;
             }
         }
+    }
+
+    public void setThreshold(float threshold) {
+        this.threshold = threshold;
+    }
+
+    protected boolean hover(Rect draggedViewBounds, Rect target, float deltaY) {
+        return helper.hover(draggedViewBounds, target, deltaY);
     }
 }
