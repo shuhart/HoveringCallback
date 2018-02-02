@@ -30,8 +30,12 @@ class Helper {
         bounds.right = right;
     }
 
-    boolean hover(Rect bounds, Rect target) {
+    boolean hover(Rect bounds, Rect target, float dy) {
+        if (dy > 0) {
+            return bounds.bottom > target.top && bounds.top < target.bottom &&
+                    bounds.top < target.top && bounds.bottom < target.bottom;
+        }
         return bounds.bottom > target.top && bounds.top < target.bottom &&
-                bounds.top < target.top && bounds.bottom < target.bottom;
+                bounds.top > target.top && bounds.bottom > target.bottom;
     }
 }

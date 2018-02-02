@@ -8,8 +8,10 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
+    private static final float threshold = 10;
     private final Rect draggedViewBounds = new Rect();
     private Helper helper = new Helper();
+    private float deltaY;
 
     ItemBackgroundCallback backgroundCallback;
     @Nullable
@@ -47,6 +49,8 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onChildDraw(Canvas canvas, RecyclerView parent, RecyclerView.ViewHolder viewHolder,
                             float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        calculateDelta(viewHolder.itemView, dY);
+
         super.onChildDraw(canvas, parent, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
         helper.prepare(parent);
@@ -67,10 +71,21 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
             draggedViewBounds.top += dY;
             draggedViewBounds.bottom += dY;
 
-            if (helper.hover(draggedViewBounds, helper.bounds) && canDropOver(parent, viewHolder, childViewHolder)) {
+            if (helper.hover(draggedViewBounds, helper.bounds, deltaY) && canDropOver(parent, viewHolder, childViewHolder)) {
                 child.setBackgroundDrawable(backgroundCallback.getHoverBackground(childViewHolder));
             } else {
                 child.setBackgroundDrawable(backgroundCallback.getDefaultBackground(childViewHolder));
+            }
+        }
+    }
+
+    private void calculateDelta(View view, float dY) {
+        float translationY = view.getTranslationY();
+        if (Math.abs(translationY - dY) >= threshold) {
+            if (translationY > dY) {
+                deltaY = -1;
+            } else {
+                deltaY = 1;
             }
         }
     }
