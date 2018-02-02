@@ -1,4 +1,4 @@
-package com.shuhart.hoveringitemtouchhelper;
+package com.shuhart.hoveringcallback;
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
@@ -14,7 +14,4 @@ public interface ItemBackgroundCallback {
 
     @Nullable
     Drawable getDraggingBackground(RecyclerView.ViewHolder viewHolder);
-
-    @Nullable
-    Drawable getEmptySlotBackground();
 }

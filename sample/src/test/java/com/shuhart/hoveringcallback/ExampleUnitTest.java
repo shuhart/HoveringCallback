@@ -1,4 +1,4 @@
-package com.shuhart.hoveringitemtouchhelper;
+package com.shuhart.hoveringcallback;
 
 import org.junit.Test;
 

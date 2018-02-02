@@ -1,4 +1,4 @@
-package com.shuhart.hoveringitemtouchhelper;
+package com.shuhart.hoveringcallback;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.shuhart.hoveringitemtouchhelper.test", appContext.getPackageName());
+        assertEquals("com.shuhart.hoveringitemtouchhelper", appContext.getPackageName());
     }
 }

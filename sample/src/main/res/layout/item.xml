@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?listPreferredItemHeight"
-    android:foreground="?selectableItemBackground"
-    android:background="@drawable/item_background">
+    android:foreground="?selectableItemBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"

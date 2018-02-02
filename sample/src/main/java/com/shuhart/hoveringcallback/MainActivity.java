@@ -1,14 +1,12 @@
-package com.shuhart.hoveringitemtouchhelper;
+package com.shuhart.hoveringcallback;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         HoverItemDecoration itemDecoration = new HoverItemDecoration(new HoveringCallback(),
                 new ItemBackgroundCallbackAdapter() {
                     private Drawable defaultBackground = new ColorDrawable(Color.WHITE);
-                    private Drawable emptySlotBackground = new ColorDrawable(Color.parseColor("#f8f8f8"));
                     private Drawable hoverBackground = new ColorDrawable(Color.parseColor("#e9effb"));
 
                     @Override
@@ -47,31 +44,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public Drawable getEmptySlotBackground() {
-                        return emptySlotBackground;
-                    }
-
-                    @Nullable
-                    @Override
                     public Drawable getHoverBackground(RecyclerView.ViewHolder viewHolder) {
                         return hoverBackground;
                     }
                 });
         itemDecoration.attachToRecyclerView(recyclerView);
-//        ItemTouchHelper touchHelper = new ItemTouchHelper(
-//                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
-//                    @Override
-//                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
-//                                          RecyclerView.ViewHolder target) {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-//
-//                    }
-//                });
-//        touchHelper.attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(adapter);
     }
 

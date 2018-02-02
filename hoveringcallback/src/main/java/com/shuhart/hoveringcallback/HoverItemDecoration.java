@@ -1,4 +1,4 @@
-package com.shuhart.hoveringitemtouchhelper;
+package com.shuhart.hoveringcallback;
 
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
@@ -20,31 +20,18 @@ public class HoverItemDecoration extends ItemTouchHelper {
     public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(canvas, parent, state);
 
-//        RecyclerView.ViewHolder viewHolder = callback.current;
-//
-//        if (viewHolder == null) {
-//            drawDefaultBackground(canvas, parent);
-//        }
-    }
-
-    private void drawDefaultBackground(Canvas canvas, RecyclerView parent) {
-        callback.helper.prepare(parent);
-
-        final int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            final View child = parent.getChildAt(i);
-
-            if (child.getBackground() != null) continue;
-
-            callback.helper.calculateBounds(parent, child);
-            RecyclerView.ViewHolder childViewHolder = parent.findContainingViewHolder(child);
-            callback.helper.drawSafelyWithinCalculatedBounds(
-                    canvas,
-                    backgroundCallback.getDefaultBackground(childViewHolder));
+        RecyclerView.ViewHolder viewHolder = callback.current;
+        if (viewHolder == null) {
+            drawDefaultBackground(parent);
         }
     }
 
-
-
-
+    private void drawDefaultBackground(RecyclerView parent) {
+        final int childCount = parent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = parent.getChildAt(i);
+            RecyclerView.ViewHolder viewHolder = parent.findContainingViewHolder(child);
+            child.setBackgroundDrawable(backgroundCallback.getDefaultBackground(viewHolder));
+        }
+    }
 }

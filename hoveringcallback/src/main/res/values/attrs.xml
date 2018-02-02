@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="RecyclerView.Hovering">
-        <attr name="hoverItemColor" format="color" />
-        <attr name="dragItemColor" format="color" />
-        <attr name="defaultItemColor" format="color" />
-        <attr name="emptySlotColor" format="color" />
-    </declare-styleable>
-</resources>

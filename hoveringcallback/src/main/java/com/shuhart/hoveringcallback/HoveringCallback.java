@@ -1,4 +1,4 @@
-package com.shuhart.hoveringitemtouchhelper;
+package com.shuhart.hoveringcallback;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -9,11 +9,11 @@ import android.view.View;
 
 public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
     private final Rect draggedViewBounds = new Rect();
+    private Helper helper = new Helper();
 
     ItemBackgroundCallback backgroundCallback;
     @Nullable
     RecyclerView.ViewHolder current;
-    Helper helper = new Helper();
 
     public HoveringCallback() {
         super(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0);
@@ -23,6 +23,15 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         super.onSelectedChanged(viewHolder, actionState);
         this.current = viewHolder;
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+            viewHolder.itemView.setBackgroundDrawable(backgroundCallback.getDraggingBackground(viewHolder));
+        }
+    }
+
+    @Override
+    public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
+        viewHolder.itemView.setBackgroundDrawable(null);
     }
 
     @Override
@@ -49,7 +58,6 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
             helper.calculateBounds(parent, child);
 
             if (viewHolder.itemView == child) {
-//                helper.drawSafelyWithinCalculatedBounds(canvas, backgroundCallback.getEmptySlotBackground());
                 continue;
             }
 
@@ -59,45 +67,11 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
             draggedViewBounds.top += dY;
             draggedViewBounds.bottom += dY;
 
-//            if (child.getBackground() != null) continue;
-
-            if (!canDropOver(parent, viewHolder, childViewHolder)) {
-//                helper.drawSafelyWithinCalculatedBounds(
-//                        canvas,
-//                        backgroundCallback.getDefaultBackground(childViewHolder));
-                child.setHovered(false);
-            } else if (helper.hover(draggedViewBounds, helper.bounds)) {
-//                helper.drawSafelyWithinCalculatedBounds(
-//                        canvas,
-//                        backgroundCallback.getHoverBackground(childViewHolder));
-                child.setHovered(true);
+            if (helper.hover(draggedViewBounds, helper.bounds) && canDropOver(parent, viewHolder, childViewHolder)) {
+                child.setBackgroundDrawable(backgroundCallback.getHoverBackground(childViewHolder));
             } else {
-//                helper.drawSafelyWithinCalculatedBounds(
-//                        canvas,
-//                        backgroundCallback.getDefaultBackground(childViewHolder));
-                child.setHovered(false);
+                child.setBackgroundDrawable(backgroundCallback.getDefaultBackground(childViewHolder));
             }
         }
-    }
-
-    @Override
-    public void onChildDrawOver(Canvas canvas, RecyclerView parent, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        super.onChildDrawOver(canvas, parent, viewHolder, dX, dY, actionState, isCurrentlyActive);
-
-//        canvas.save();
-//        canvas.clipRect(draggedViewBounds);
-//
-//        parent.getDecoratedBoundsWithMargins(viewHolder.itemView, draggedViewBounds);
-//        draggedViewBounds.top += dY;
-//        draggedViewBounds.bottom += dY;
-//        if (viewHolder.itemView.getBackground() == null) {
-//            helper.drawBackgroundSafely(
-//                    draggedViewBounds,
-//                    canvas,
-//                    backgroundCallback.getDraggingBackground(viewHolder));
-//        }
-//        viewHolder.itemView.draw(canvas);
-//
-//        canvas.restore();
     }
 }

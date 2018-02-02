@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
-    tools:context="com.shuhart.hoveringitemtouchhelper.MainActivity">
+    tools:context="com.shuhart.hoveringcallback.MainActivity">
 
 <android.support.v7.widget.RecyclerView
     android:id="@+id/recyclerView"
