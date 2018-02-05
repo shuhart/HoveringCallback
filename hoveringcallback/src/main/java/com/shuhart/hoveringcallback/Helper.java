@@ -4,6 +4,9 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import static com.shuhart.hoveringcallback.HoveringCallback.DONW;
+import static com.shuhart.hoveringcallback.HoveringCallback.UP;
+
 class Helper {
     private int left;
     private int right;
@@ -30,12 +33,14 @@ class Helper {
         bounds.right = right;
     }
 
-    boolean hover(Rect bounds, Rect target, float dy) {
-        if (dy > 0) {
+    boolean hover(Rect bounds, Rect target, @HoveringCallback.DragDirection int dragDirection) {
+        if (dragDirection == DONW) {
             return bounds.bottom > target.top && bounds.top < target.bottom &&
                     bounds.top < target.top && bounds.bottom < target.bottom;
+        } else if (dragDirection == UP) {
+            return bounds.bottom > target.top && bounds.top < target.bottom &&
+                    bounds.top > target.top && bounds.bottom > target.bottom;
         }
-        return bounds.bottom > target.top && bounds.top < target.bottom &&
-                bounds.top > target.top && bounds.bottom > target.bottom;
+        return false;
     }
 }

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,22 @@ public class MainActivity extends AppCompatActivity {
             }
         }});
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        HoverItemDecoration itemDecoration = new HoverItemDecoration(new HoveringCallback(),
+        HoverItemDecoration itemDecoration = new HoverItemDecoration(
+                new HoveringCallback() {
+                    @Override
+                    public void attachToRecyclerView(@NonNull RecyclerView recyclerView) {
+                        super.attachToRecyclerView(recyclerView);
+                        addOnDropListener(new OnDroppedListener() {
+                            @Override
+                            public void onDroppedOn(RecyclerView.ViewHolder target) {
+                                Toast.makeText(
+                                        MainActivity.this,
+                                        "Dropped on position " + target.getAdapterPosition(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                },
                 new ItemBackgroundCallbackAdapter() {
                     private Drawable defaultBackground = new ColorDrawable(Color.WHITE);
                     private Drawable hoverBackground = new ColorDrawable(Color.parseColor("#e9effb"));

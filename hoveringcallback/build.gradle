@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/shuhart/HoveringCallback'
     gitUrl = 'https://github.com/shuhart/HoveringCallback.git'
 
-    libraryVersion = '1.2.0'
+    libraryVersion = '1.2.1'
 
     developerId = 'shuhart'
     developerName = 'Redrick Shuhart'
@@ -38,7 +38,6 @@ buildscript {
 
 android {
     compileSdkVersion 27
-
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
@@ -47,14 +46,13 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    buildToolsVersion '27.0.3'
 }
 
 def supportVersion = "27.0.2"
