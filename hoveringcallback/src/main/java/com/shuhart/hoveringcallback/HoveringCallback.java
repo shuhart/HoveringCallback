@@ -25,7 +25,7 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
     public static final int IDLE = 2;
 
     public interface OnDroppedListener {
-        void onDroppedOn(RecyclerView.ViewHolder target);
+        void onDroppedOn(RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target);
     }
 
     private List<OnDroppedListener> onDroppedListeners = new ArrayList<>();
@@ -85,7 +85,7 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
 
     private void notifyDroppedOnListeners(RecyclerView.ViewHolder holder) {
         for (OnDroppedListener listener : onDroppedListeners) {
-            listener.onDroppedOn(holder);
+            listener.onDroppedOn(current, holder);
         }
     }
 
