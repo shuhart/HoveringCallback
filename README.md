@@ -13,27 +13,42 @@ Usage
 Example:
 
 ```java
-HoverItemDecoration itemDecoration = new HoverItemDecoration(new HoveringCallback(),
-                new ItemBackgroundCallbackAdapter() {
-                    private Drawable defaultBackground = new ColorDrawable(Color.WHITE);
-                    private Drawable hoverBackground = new ColorDrawable(Color.parseColor("#e9effb"));
-
+HoverItemDecoration itemDecoration = new HoverItemDecoration(
+        new HoveringCallback() {
+            @Override
+            public void attachToRecyclerView(@Nullable RecyclerView recyclerView) {
+                super.attachToRecyclerView(recyclerView);
+                addOnDropListener(new OnDroppedListener() {
                     @Override
-                    public Drawable getDefaultBackground(RecyclerView.ViewHolder viewHolder) {
-                        return defaultBackground;
-                    }
-
-                    @Override
-                    public Drawable getDraggingBackground(RecyclerView.ViewHolder viewHolder) {
-                        return defaultBackground;
-                    }
-
-                    @Override
-                    public Drawable getHoverBackground(RecyclerView.ViewHolder viewHolder) {
-                        return hoverBackground;
+                    public void onDroppedOn(RecyclerView.ViewHolder target) {
+                        Toast.makeText(
+                                MainActivity.this,
+                                "Dropped on position " + target.getAdapterPosition(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
-        itemDecoration.attachToRecyclerView(recyclerView);
+            }
+        },
+        new ItemBackgroundCallbackAdapter() {
+            private Drawable defaultBackground = new ColorDrawable(Color.WHITE);
+            private Drawable hoverBackground = new ColorDrawable(Color.parseColor("#e9effb"));
+
+            @Override
+            public Drawable getDefaultBackground(RecyclerView.ViewHolder viewHolder) {
+                return defaultBackground;
+            }
+
+            @Override
+            public Drawable getDraggingBackground(RecyclerView.ViewHolder viewHolder) {
+                return defaultBackground;
+            }
+
+            @Override
+            public Drawable getHoverBackground(RecyclerView.ViewHolder viewHolder) {
+                return hoverBackground;
+            }
+        });
+itemDecoration.attachToRecyclerView(recyclerView);
 ```
 License
 =======
