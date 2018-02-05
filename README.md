@@ -20,7 +20,7 @@ HoverItemDecoration itemDecoration = new HoverItemDecoration(
                 super.attachToRecyclerView(recyclerView);
                 addOnDropListener(new OnDroppedListener() {
                     @Override
-                    public void onDroppedOn(RecyclerView.ViewHolder target) {
+                    public void onDroppedOn(RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                         Toast.makeText(
                                 MainActivity.this,
                                 "Dropped on position " + target.getAdapterPosition(),
