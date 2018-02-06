@@ -60,9 +60,7 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         super.onSelectedChanged(viewHolder, actionState);
         if (viewHolder == null) {
-            if (current != null) {
-                findDroppedOn();
-            }
+            findDroppedOn();
         }
         this.current = viewHolder;
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE && viewHolder != null) {
@@ -71,12 +69,12 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
     }
 
     private void findDroppedOn() {
-        if (recyclerView == null) return;
+        if (recyclerView == null || current == null || current.getAdapterPosition() == RecyclerView.NO_POSITION) return;
         int childCount = recyclerView.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View view = recyclerView.getChildAt(i);
             RecyclerView.ViewHolder holder = recyclerView.findContainingViewHolder(view);
-            if (holder == null) continue;
+            if (holder == null || holder.getAdapterPosition() == RecyclerView.NO_POSITION) continue;
             if (view.getBackground() == backgroundCallback.getHoverBackground(holder)) {
                 notifyDroppedOnListeners(holder);
             }
@@ -137,7 +135,7 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
 
             RecyclerView.ViewHolder childViewHolder = parent.findContainingViewHolder(child);
 
-            if (childViewHolder == null) {
+            if (childViewHolder == null || childViewHolder.getAdapterPosition() == RecyclerView.NO_POSITION) {
                 continue;
             }
 

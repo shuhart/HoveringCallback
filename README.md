@@ -7,7 +7,7 @@ Usage
 -----
 
 1. Add jcenter() to repositories block in your gradle file.
-2. Add `implementation 'com.shuhart.hoveringcallback:hoveringcallback:1.2.2'` to your dependencies.
+2. Add `implementation 'com.shuhart.hoveringcallback:hoveringcallback:1.2.3'` to your dependencies.
 3. Look into the sample for additional details on how to use and configure the library.
 
 Example:
