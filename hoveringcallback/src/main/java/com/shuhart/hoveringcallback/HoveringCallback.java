@@ -75,7 +75,8 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
             View view = recyclerView.getChildAt(i);
             RecyclerView.ViewHolder holder = recyclerView.findContainingViewHolder(view);
             if (holder == null || holder.getAdapterPosition() == RecyclerView.NO_POSITION) continue;
-            if (view.getBackground() == backgroundCallback.getHoverBackground(holder)) {
+            if (view.getBackground() == backgroundCallback.getHoverBackground(holder) &&
+                    canDropOver(recyclerView, current, holder)) {
                 notifyDroppedOnListeners(holder);
             }
         }
