@@ -2,6 +2,7 @@ package com.shuhart.hoveringcallback;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +18,12 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
     @Retention(SOURCE)
     @IntDef({UP, DONW, IDLE})
-    public @interface DragDirection {
+    @interface DragDirection {
     }
 
-    public static final int UP = 0;
-    public static final int DONW = 1;
-    public static final int IDLE = 2;
+    static final int UP = 0;
+    static final int DONW = 1;
+    static final int IDLE = 2;
 
     public interface OnDroppedListener {
         void onDroppedOn(RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target);
@@ -61,10 +62,11 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
         super.onSelectedChanged(viewHolder, actionState);
         if (viewHolder == null) {
             findDroppedOn();
+            dragDirection = IDLE;
         }
         this.current = viewHolder;
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE && viewHolder != null) {
-            viewHolder.itemView.setBackgroundDrawable(backgroundCallback.getDraggingBackground(viewHolder));
+            viewHolder.itemView.setBackgroundColor(backgroundCallback.getDraggingBackgroundColor(viewHolder));
         }
     }
 
@@ -72,10 +74,13 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
         if (recyclerView == null || current == null || current.getAdapterPosition() == RecyclerView.NO_POSITION) return;
         int childCount = recyclerView.getChildCount();
         for (int i = 0; i < childCount; i++) {
-            View view = recyclerView.getChildAt(i);
-            RecyclerView.ViewHolder holder = recyclerView.findContainingViewHolder(view);
+            View child = recyclerView.getChildAt(i);
+            RecyclerView.ViewHolder holder = recyclerView.findContainingViewHolder(child);
             if (holder == null || holder.getAdapterPosition() == RecyclerView.NO_POSITION) continue;
-            if (view.getBackground() == backgroundCallback.getHoverBackground(holder) &&
+            draggedViewBounds.top = (int) current.itemView.getY();
+            draggedViewBounds.bottom = draggedViewBounds.top + current.itemView.getHeight();
+            helper.calculateBounds(recyclerView, child);
+            if (hover(draggedViewBounds, helper.bounds, dragDirection) &&
                     canDropOver(recyclerView, current, holder)) {
                 notifyDroppedOnListeners(holder);
             }
@@ -91,8 +96,7 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
-        viewHolder.itemView.setBackgroundDrawable(null);
-        dragDirection = IDLE;
+        viewHolder.itemView.setBackgroundColor(backgroundCallback.getDefaultBackgroundColor(viewHolder));
     }
 
     @Override
@@ -141,9 +145,9 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
             }
 
             if (hover(draggedViewBounds, helper.bounds, dragDirection) && canDropOver(parent, viewHolder, childViewHolder)) {
-                child.setBackgroundDrawable(backgroundCallback.getHoverBackground(childViewHolder));
+                child.setBackgroundColor(backgroundCallback.getHoverBackgroundColor(childViewHolder));
             } else {
-                child.setBackgroundDrawable(backgroundCallback.getDefaultBackground(childViewHolder));
+                child.setBackgroundColor(backgroundCallback.getDefaultBackgroundColor(childViewHolder));
             }
         }
     }

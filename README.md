@@ -34,12 +34,12 @@ HoverItemDecoration itemDecoration = new HoverItemDecoration(
             private Drawable hoverBackground = new ColorDrawable(Color.parseColor("#e9effb"));
 
             @Override
-            public Drawable getDefaultBackground(RecyclerView.ViewHolder viewHolder) {
+            public Drawable getDefaultBackgroundColor(RecyclerView.ViewHolder viewHolder) {
                 return defaultBackground;
             }
 
             @Override
-            public Drawable getDraggingBackground(RecyclerView.ViewHolder viewHolder) {
+            public Drawable getDraggingBackgroundColor(RecyclerView.ViewHolder viewHolder) {
                 return defaultBackground;
             }
 
