@@ -50,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     }
+
+                    @Override
+                    public boolean canDropOver(RecyclerView recyclerView, RecyclerView.ViewHolder current, RecyclerView.ViewHolder target) {
+                        return target.getAdapterPosition() % 4 != 0 && super.canDropOver(recyclerView, current, target);
+                    }
                 },
                 new ItemBackgroundCallback() {
                     private int hoverColor = Color.parseColor("#e9effb");

@@ -94,6 +94,10 @@ public class HoveringCallback extends ItemTouchHelper.SimpleCallback {
             return;
         }
 
+        if (recyclerView == null || selected == null) {
+            return;
+        }
+
         final RecyclerView.LayoutManager lm = recyclerView.getLayoutManager();
         final int childCount = lm.getChildCount();
         List<RecyclerView.ViewHolder> swapTargets = findSwapTargets(viewHolder, dX, dY);
