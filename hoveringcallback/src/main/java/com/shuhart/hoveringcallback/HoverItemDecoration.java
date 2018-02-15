@@ -1,8 +1,6 @@
 package com.shuhart.hoveringcallback;
 
 import android.graphics.Canvas;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -29,7 +27,7 @@ public class HoverItemDecoration extends ItemTouchHelper {
     public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(canvas, parent, state);
 
-        RecyclerView.ViewHolder viewHolder = callback.current;
+        RecyclerView.ViewHolder viewHolder = callback.selected;
         if (viewHolder == null) {
             drawDefaultBackground(parent);
         }
