@@ -7,7 +7,7 @@ Usage
 -----
 
 1. Add jcenter() to repositories block in your gradle file.
-2. Add `implementation 'com.shuhart.hoveringcallback:hoveringcallback:1.2.4'` to your dependencies.
+2. Add `implementation 'com.shuhart.hoveringcallback:hoveringcallback:1.3.0'` to your dependencies.
 3. Look into the sample for additional details on how to use and configure the library.
 
 Example:
@@ -29,23 +29,22 @@ HoverItemDecoration itemDecoration = new HoverItemDecoration(
                 });
             }
         },
-        new ItemBackgroundCallbackAdapter() {
-            private Drawable defaultBackground = new ColorDrawable(Color.WHITE);
-            private Drawable hoverBackground = new ColorDrawable(Color.parseColor("#e9effb"));
+        new ItemBackgroundCallback() {
+            private int hoverColor = Color.parseColor("#e9effb");
 
             @Override
-            public Drawable getDefaultBackgroundColor(RecyclerView.ViewHolder viewHolder) {
-                return defaultBackground;
+            public int getDefaultBackgroundColor(@NonNull RecyclerView.ViewHolder viewHolder) {
+                return Color.WHITE;
             }
 
             @Override
-            public Drawable getDraggingBackgroundColor(RecyclerView.ViewHolder viewHolder) {
-                return defaultBackground;
+            public int getDraggingBackgroundColor(@NonNull RecyclerView.ViewHolder viewHolder) {
+                return Color.WHITE;
             }
 
             @Override
-            public Drawable getHoverBackground(RecyclerView.ViewHolder viewHolder) {
-                return hoverBackground;
+            public int getHoverBackgroundColor(@NonNull RecyclerView.ViewHolder viewHolder) {
+                return hoverColor;
             }
         });
 itemDecoration.attachToRecyclerView(recyclerView);
