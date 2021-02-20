@@ -1,10 +1,11 @@
 package com.shuhart.hoveringcallback;
 
 import android.graphics.Canvas;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class HoverItemDecoration extends ItemTouchHelper {
     private ItemBackgroundCallback backgroundCallback;

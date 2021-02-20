@@ -6,8 +6,8 @@ Drag & drop item decorator for RecyclerView with support for highlighting hovere
 Usage
 -----
 
-1. Add jcenter() to repositories block in your gradle file.
-2. Add `implementation 'com.shuhart.hoveringcallback:hoveringcallback:1.2.6'` to your dependencies.
+1. Add mavenCentral() to repositories block in your gradle file.
+2. Add `implementation 'com.shuhart:hoveringcallback:1.3.0'` to your dependencies.
 3. Look into the sample for additional details on how to use and configure the library.
 
 Example:

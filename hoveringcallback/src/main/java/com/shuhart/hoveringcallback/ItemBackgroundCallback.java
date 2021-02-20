@@ -1,8 +1,8 @@
 package com.shuhart.hoveringcallback;
 
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public interface ItemBackgroundCallback {
 
