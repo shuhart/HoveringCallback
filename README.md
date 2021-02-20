@@ -7,7 +7,7 @@ Usage
 -----
 
 1. Add mavenCentral() to repositories block in your gradle file.
-2. Add `implementation 'com.shuhart:hoveringcallback:1.3.0'` to your dependencies.
+2. Add `implementation 'com.github.shuhart:hoveringcallback:1.3.0'` to your dependencies.
 3. Look into the sample for additional details on how to use and configure the library.
 
 Example:
